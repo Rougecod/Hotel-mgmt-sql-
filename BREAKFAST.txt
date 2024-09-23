@@ -1,0 +1,13 @@
+FOOD CODE      FOOD NAME            COST    
+
+01             Tomato Upma           40
+02             Oats Upma             45
+03             Masala dosa           70
+04             Plain dosa            65
+05             Neer dosa             50
+06             Puri Bhaji            65
+07             Idli Vada (2 Pieces)  40
+08             Aloo paratha          50
+09             paneer paratha        60
+10             Appam                 40
+11             Bread Omelette        50

@@ -1,0 +1,13 @@
+FOOD CODE      FOOD NAME            COST    
+
+01             Samosa (2 piece)      40
+02             Bread Pakora          50
+03             Vada pav (2 piece)    40
+04             Veg. Sandwich         45
+05             Chicken Sandwich      60
+06             Pani puri             35
+07             Matar Kachori         50
+08             Masala puri           35
+09             Dahi puri             40
+10             Aloo chaat            45
+11             Bread Omelette        50
