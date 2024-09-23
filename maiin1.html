@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Hotel Management System</title>
+<style>
+body, h1, p, ol {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('hotelimg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container h1 {
+    margin-bottom: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 300px; 
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 20px; 
+}
+
+.dropdown-content button {
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.message {
+    position: absolute;
+    top: 120px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: moveMessage 10s linear infinite; 
+}
+
+@keyframes moveMessage {
+    0% {
+        left: -100%; 
+    }
+    100% {
+        left: 100%; 
+    }
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>WELCOME TO HOTEL_SADANAND</h1>
+    <div class="message">
+        <p>"Discounts available! Do book your rooms today!"</p>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Menu</button>
+        <div class="dropdown-content">
+            <button onclick="window.location.href='customer.html'">Customer</button>
+            <button onclick="window.location.href='admin.html'">Administrator</button>
+            <button onclick="alert('Staff Page')">Staff</button>
+            <button onclick="alert('About Page')">About</button>
+            <button onclick="alert('Exiting Hotel Sadanand')">Exit</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

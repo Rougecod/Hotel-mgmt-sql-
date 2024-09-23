@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Billing System</title>
+<style>
+body {
+    background-image: url('hotelimg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input {
+    padding: 8px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#billingDetails {
+    margin-top: 20px;
+    text-align: left;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>BILL</h2>
+    <form id="billingForm">
+        <label for="numRooms">Enter the number of rooms:</label>
+        <input type="number" id="numRooms" required><br><br>
+        <label for="roomNumber">Enter the room number:</label>
+        <input type="text" id="roomNumber" required><br><br>
+        <label for="roomType">Select the room type:</label>
+        <select id="roomType" required>
+            <option value="1">Room 1</option>
+            <option value="2">Room 2</option>
+            <option value="3">Room 3</option>
+            <option value="4">Room 4</option>
+            <option value="5">Room 5</option>
+        </select><br><br>
+        <div id="billingDetails"></div>
+        <button type="button" onclick="generateBill()">Generate Bill</button>
+    </form>
+</div>
+<script>
+function calculateCost(foodCodes) {
+    var totalCost = 0;
+    // Your food code calculation logic remains the same
+    // ...
+    return totalCost;
+}
+
+function generateBill() {
+    var numRooms = document.getElementById("numRooms").value;
+    var roomNumber = document.getElementById("roomNumber").value;
+    var roomType = document.getElementById("roomType").value;
+
+    // Similar changes for taking food orders as well
+
+    // Calculate accommodation cost based on room type
+    var roomCost;
+    switch (parseInt(roomType)) {
+        case 1:
+            roomCost = 7000;
+            break;
+        case 2:
+            roomCost = 6000;
+            break;
+        case 3:
+            roomCost = 4000;
+            break;
+        case 4:
+            roomCost = 3000;
+            break;
+        case 5:
+            roomCost = 2000;
+            break;
+        default:
+            alert("Invalid room type!");
+            return;
+    }
+
+    // Calculate total cost and display billing details
+    var subtotal = parseInt(numRooms) * roomCost;
+    var tax = subtotal * 0.18;
+    var total = subtotal + tax;
+
+    var billingDetails = document.getElementById("billingDetails");
+    billingDetails.innerHTML = `
+        <p>Room number: ${roomNumber}</p>
+        <p>Room type: ${roomType}</p>
+        <p>Accommodation cost: Rs. ${roomCost}</p>
+        <p>Subtotal: Rs. ${subtotal}</p>
+        <p>Tax (GST): Rs. ${tax.toFixed(2)}</p>
+        <p>Total: Rs. ${total.toFixed(2)}</p>
+    `;
+}
+</script>
+</body>
+</html>

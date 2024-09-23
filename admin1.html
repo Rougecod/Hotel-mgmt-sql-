@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Management System</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('hotelimg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+ol {
+    list-style-type: none;
+    padding: 0;
+}
+
+ol li {
+    margin-bottom: 10px;
+}
+
+h2 {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Hotel Management System</h2>
+    <hr>
+    <p>What operations would you like to perform?</p>
+    <ol>
+        <li><button onclick="modifyCustomerDetails()">Modify customer details as per their requirement</button></li>
+        <li><button onclick="viewCustomerBill()">Overviewing the customer's bill</button></li>
+        <li><button onclick="deleteCustomerRecord()">Delete a customer record</button></li>
+        <li><button onclick="exitSystem()">Exit</button></li>
+    </ol>
+</div>
+
+<script>
+function modifyCustomerDetails() {
+    // Code to modify customer details
+    window.location.href="change_details.html";
+}
+
+function viewCustomerBill() {
+    // Code to view customer bill  
+    window.location.href="billing.html";
+}
+
+function deleteCustomerRecord() {
+    // Code to delete customer record
+    alert("Code to delete customer record");
+}
+
+function exitSystem() {
+    // Code to exit system
+    alert("Exiting the system");
+    window.location.href="main.html";
+}
+</script>
+
+</body>
+</html>

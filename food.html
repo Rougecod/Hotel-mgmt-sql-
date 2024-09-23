@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Orders - Hotel Management System</title>
+<style>
+/* CSS styles */
+body {
+    background-image: url('hotelimg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.message {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.food-list {
+    text-align: left;
+    margin-top: 20px;
+    display: none; /* Initially hide the food list */
+}
+
+.food-list.active {
+    display: block; /* Show the food list when active */
+}
+
+.food-list table {
+    width: 100%;
+}
+
+.food-list th, .food-list td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>FOOD ORDERS</h2>
+    <form id="foodOrderForm">
+        <label for="roomNumber">Enter the room number:</label>
+        <input type="text" id="roomNumber" required><br><br>
+        <p>The orders will be taken one by one.</p>
+        <label for="orderChoice">What would you like:</label>
+        <select id="orderChoice" onchange="showFoodList()" required>
+            <option value="1">Breakfast</option>
+            <option value="2">Lunch</option>
+            <option value="3">Snacks</option>
+            <option value="4">Dinner</option>
+        </select><br><br>
+        <div id="foodLists">
+            <!-- Food Lists will be dynamically populated here -->
+        </div>
+        <label for="foodCode">Enter the food code of the item you want:</label>
+        <input type="text" id="foodCode" required><br><br>
+        <label for="moreItems">Do you want to have more items (YES/NO):</label>
+        <input type="text" id="moreItems" required><br><br>
+        <button type="button" onclick="addOrder()">Add Order</button>
+        <button type="button" onclick="calculateTotal()">Submit</button>
+    </form>
+    <div id="totalCost" class="message" style="display: none;"></div>
+</div>
+
+<script>
+// Food items for different meal types
+const foodItems = {
+    "Breakfast": [
+        { code: "01", name: "Tomato Upma", cost: 40 },
+        { code: "02", name: "Oats Upma", cost: 45 },
+        { code: "03", name: "Masala dosa", cost: 70 },
+        { code: "04", name: "Plain dosa", cost: 65 },
+        { code: "05", name: "Neer dosa", cost: 50 },
+        { code: "06", name: "Puri Bhaji", cost: 65 },
+        { code: "07", name: "Idli Vada (2 Pieces)", cost: 40 },
+        { code: "08", name: "Aloo paratha", cost: 50 },
+        { code: "09", name: "Paneer paratha", cost: 60 },
+        { code: "10", name: "Appam", cost: 40 },
+        { code: "11", name: "Bread Omelette", cost: 50 }
+    ],
+    "Lunch": [
+        { code: "12", name: "Onion Pakora", cost: 45 },
+        { code: "13", name: "Chicken Tandori", cost: 70 },
+        { code: "14", name: "Veg. Dum Biriyani", cost: 85 },
+        { code: "15", name: "White rice", cost: 40 },
+        { code: "16", name: "Chicken Biriyani", cost: 120 },
+        { code: "17", name: "Butter Naan", cost: 35 },
+        { code: "18", name: "Plain Naan", cost: 30 },
+        { code: "19", name: "Aloo Gobi Masala", cost: 130 },
+        { code: "20", name: "Paneer Butter Masala", cost: 150 },
+        { code: "21", name: "Dal Makhani", cost: 160 },
+        { code: "22", name: "Tikka biriyani",cost:220},
+        { code: "23", name: "pudding",cost:70},
+        { code: "24", name: "gulab jamun",cost:60},
+        { code: "25", name: "Ice cream",cost:35}
+    ],
+    "Snacks": [   
+        { code:"26", name:"Samosa(2 piece)",cost:40},
+        { code:"27", name:"Bread Pakora",cost:50},
+        { code:"28", name:"Vada pav (2 piece)",cost:40},
+        { code:"29", name:"Veg. Sandwich",cost:45},
+        { code:"30", name:"Chicken Sandwich",cost:60},
+        { code:"31", name:"Pani puri",cost:35},
+        { code:"32", name:"Matar Kachori",cost:50},
+        { code:"33", name:"Masala puri",cost:35},
+        { code:"34", name:"Dahi puri",cost:40},
+        { code:"35", name:"Aloo chaat",cost:45},
+        { code:"36", name:"Bread Omelette",cost:50}
+
+    ],
+    "Dinner":[
+        { code: "37", name: "Masala papad", cost: 45 },
+        { code: "38", name: "Chicken Tandori", cost: 70 },
+        { code: "39", name: "Veg. Dum Biriyani", cost: 85 },
+        { code: "40", name: "White rice", cost: 40 },
+        { code: "41", name: "Chicken Biriyani", cost: 120 },
+        { code: "42", name: "Butter Naan", cost: 35 },
+        { code: "43", name: "Plain Naan", cost: 30 },
+        { code: "44", name: "Aloo Gobi Masala", cost: 130 },
+        { code: "45", name: "Paneer Butter Masala", cost: 150 },
+        { code: "46", name: "Dal Makhani", cost: 160 },
+        { code: "47", name: "Tikka biriyani",cost:220},
+        { code: "48", name: "gobi manchuri",cost:65},
+        { code: "49", name: "fish curry rice",cost:110},
+        { code: "50", name: "chicken tikka masala",cost:140},
+        { code: "51", name: "paneer tikka masala",cost:120},
+        { code: "52", name: "crispy chicken",cost:120},
+        { code: "53", name: "pudding",cost:70},
+        { code: "54", name: "gulab jamun",cost:60},
+        { code: "55", name: "Ice cream",cost:35}
+    ],
+
+};
+
+// Array to store orders
+var orders = [];
+
+// Function to add an order
+function addOrder() {
+    var roomNumber = document.getElementById("roomNumber").value;
+    var orderChoice = document.getElementById("orderChoice").value;
+    var foodCode = document.getElementById("foodCode").value;
+    var moreItems = document.getElementById("moreItems").value.toUpperCase();
+
+    var order = {
+        roomNumber: roomNumber,
+        orderChoice: orderChoice,
+        foodCode: foodCode,
+        moreItems: moreItems
+    };
+
+    orders.push(order);
+
+    // Clear the form
+    document.getElementById("roomNumber").value = "";
+    document.getElementById("orderChoice").value = "1";
+    document.getElementById("foodCode").value = "";
+    document.getElementById("moreItems").value = "";
+
+    // Optionally, you can display a message confirming the order was added
+    alert("Order added successfully!");
+}
+
+// Function to show food list based on selected order choice
+function showFoodList() {
+    var orderChoice = document.getElementById("orderChoice").value;
+    var foodLists = document.getElementById("foodLists");
+    foodLists.innerHTML = ""; // Clear previous content
+
+    if (orderChoice === "1") {
+        // Breakfast
+        displayFoodList(foodItems["Breakfast"]);
+    } else if (orderChoice === "2") {
+        // Lunch
+        displayFoodList(foodItems["Lunch"]);
+        
+    } else if (orderChoice === "3") {
+        displayFoodList(foodItems["Snacks"]);
+
+    } else if (orderChoice === "4") {
+        displayFoodList(foodItems["Dinner"]);
+    }
+}
+
+// Function to display food list dynamically
+function displayFoodList(foodList) {
+    var foodLists = document.getElementById("foodLists");
+    var table = document.createElement("table");
+    var tableHTML = "<thead><tr><th>Food Code</th><th>Food Name</th><th>Cost</th></tr></thead><tbody>";
+    foodList.forEach(function(item) {
+        tableHTML += "<tr><td>" + item.code + "</td><td>" + item.name + "</td><td>Rs. " + item.cost + "</td></tr>";
+    });
+    tableHTML += "</tbody>";
+    table.innerHTML = tableHTML;
+    foodLists.appendChild(table);
+    foodLists.classList.add("food-list", "active"); // Show the food list
+}
+
+// Function to calculate total cost
+function calculateTotal() {
+    // Same as before
+    var roomNumber = document.getElementById("roomNumber").value;
+    var orderChoice = document.getElementById("orderChoice").value;
+    var foodCode = document.getElementById("foodCode").value;
+    var moreItems = document.getElementById("moreItems").value.toUpperCase();
+    window.location.href="billing.html"
+
+    // Same as before
+
+    // Check if user wants more items
+    if (moreItems === "YES") {
+        alert("Please continue entering food items.");
+    } else if (moreItems === "NO") {
+        // Display total cost
+        document.getElementById("totalCost").innerText = "The total cost for the order is: Rs. " + totalCost;
+        document.getElementById("totalCost").style.display = "block";
+    } else {
+        alert("Invalid input for more items. Please enter 'YES' or 'NO'.");
+    }
+}
+</script>
+</body>
+</html>
+

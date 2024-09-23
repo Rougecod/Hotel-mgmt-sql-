@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accommodation Booking - Hotel Management System</title>
+<style>
+/* CSS styles */
+body {
+    background-image: url('hotelimg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.message {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.room-number {
+    color: #007bff;
+}
+
+.services {
+    display: none;
+}
+
+.service-options {
+    margin-top: 20px;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>OUR ACCOMMODATION PACKAGES</h1>
+    <p>(1) Suite rooms (double bed, AC): Rs.7000 per day</p>
+    <p>(2) Premium rooms (double bed with AC): Rs.6000 per day</p>
+    <p>(3) Premium rooms (single bed with AC): Rs.4000 per day</p>
+    <p>(4) Premium rooms (double bed without AC): Rs.3000 per day</p>
+    <p>(5) Premium rooms (single bed without AC): Rs.2000 per day</p>
+    <button onclick="continueBooking()">Are you sure you want to continue with purchasing our packages (Y/N)?</button>
+    <div id="bookingForm" class="services">
+        <p>Enter the number of rooms you want: <input type="number" id="numRooms" min="1" required></p>
+        <p>Enter your choice of room type (1, 2, 3, 4, or 5): <input type="number" id="roomType" min="1" max="5" required></p>
+        <button onclick="reserveRoom()">Reserve Room</button>
+    </div>
+    <div id="confirmation" class="message" style="display: none;"></div>
+    <div id="serviceOptions" class="services">
+        <p>Which of the following services you would like to avail...</p>
+        <p>1. Order food</p>
+        <p>2. Exit</p>
+        <p>Your choice(1 or 2): <input type="number" id="serviceChoice" min="1" max="2"></p>
+        <button onclick="selectService()">Submit</button>
+    </div>
+</div>
+
+<script>
+function continueBooking() {
+    var confirmation = confirm("Are you sure you want to continue with purchasing our packages (Y/N)?");
+    if (confirmation) {
+        document.getElementById("bookingForm").style.display = "block";
+    }
+}
+
+function reserveRoom() {
+    var numRooms = document.getElementById("numRooms").value;
+    var roomType = document.getElementById("roomType").value;
+
+    // Check if the room type is available
+    if (roomType == 2) {
+        // Assuming room type 2 is not available currently
+        document.getElementById("confirmation").innerHTML = "This type of room is not available currently, kindly try other rooms";
+        document.getElementById("confirmation").style.display = "block";
+    } else {
+        // Generate room numbers
+        var roomNumbers = [];
+        for (var i = 0; i < numRooms; i++) {
+            roomNumbers.push(Math.floor(100 + Math.random() * 900)); // Generate random room numbers
+        }
+        var roomNumbersString = roomNumbers.join(', ');
+        document.getElementById("confirmation").innerHTML = "Your room numbers are: <span class='room-number'>" + roomNumbersString + "</span>. Your registration and the required type of rooms have been successfully reserved for you. You may now start with exploring and availing the facilities in our hotel.";
+        document.getElementById("confirmation").style.display = "block";
+        document.getElementById("serviceOptions").style.display = "block";
+    }
+}
+
+function selectService() {
+    var serviceChoice = document.getElementById("serviceChoice").value;
+    if (serviceChoice == 1) {
+        window.location.href="food.html"
+    } else if (serviceChoice == 2) {
+        alert("Thank you for choosing our services. Have a pleasant stay!");
+        window.location.href="main.html"
+    } else {
+        alert("Invalid choice. Please select either 1 or 2.");
+    }
+}
+</script>
+</body>
+</html>
