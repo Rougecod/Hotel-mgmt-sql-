@@ -22,6 +22,9 @@ A filter is also provided which gives you the option to fill fields(amenities) a
 ## Requirements
 ```
 python-3
+HTML
+CSS
+SQL
 
 ```
 
